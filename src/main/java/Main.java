@@ -3,34 +3,55 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Main {
-
+class IPvalid{
     private static final String IPADDRESS =
-                    "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+            "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
                     "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
                     "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
                     "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+    private Pattern p;
+    private Matcher m;
+
+    IPvalid() {
+        p = Pattern.compile(IPADDRESS);
+    }
+    public boolean valid(String s){
+        m = p.matcher(s);
+        return m.matches();
+    }
+}
+
+public class Main {
+
+    private static final String ERRIP = "Неверный формат IP адреса, повторите ввод!!!";
 
     public static void main(String args[]){
         Scanner in = new Scanner(System.in);
-        String s1;
+        String s1,s2;
         boolean b = true;
         do {
             System.out.println("Введите начальный IP: ");
             s1 = in.nextLine();
-
-            Pattern p = Pattern.compile(IPADDRESS);
-            Matcher m = p.matcher(s1);
-            if(m.matches()) b = false;
+            IPvalid iPvalid = new IPvalid();
+            if(iPvalid.valid(s1)) b = false;
             else {
-                System.out.println("Неверный формат IP адреса, повторите ввод!!!");
+                System.out.println(ERRIP);
             }
         }while (b);
 
-        System.out.println("Введите конечный IP: ");
-        String s2 = in.nextLine();
+        do {
+            System.out.println("Введите конечный IP: ");
+            s2 = in.nextLine();
+            IPvalid iPvalid = new IPvalid();
+            if(iPvalid.valid(s2)) b = false;
+            else {
+                System.out.println(ERRIP);
+            }
+        }while (b);
+
         short ip1[] = new short[4];
         short ip2[] = new short[4];
+
         String s[] = s1.split("\\.");
         for (int i = 0; i < s.length; i++) {
             ip1[i] = Short.parseShort(s[i]);
