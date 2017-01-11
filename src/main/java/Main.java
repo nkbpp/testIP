@@ -26,75 +26,66 @@ public class Main {
     private static final String ERRIP = "Неверный формат IP адреса, повторите ввод!!!";
 
     public static void main(String args[]){
-//        Scanner in = new Scanner(System.in);
-//        String s1,s2;
-//        boolean b = true;
-//        do {
-//            System.out.println("Введите начальный IP: ");
-//            s1 = in.nextLine();
-//            IPvalid iPvalid = new IPvalid();
-//            if(iPvalid.valid(s1)) b = false;
-//            else {
-//                System.out.println(ERRIP);
-//            }
-//        }while (b);
-//
-//        do {
-//            System.out.println("Введите конечный IP: ");
-//            s2 = in.nextLine();
-//            IPvalid iPvalid = new IPvalid();
-//            if(iPvalid.valid(s2)) b = false;
-//            else {
-//                System.out.println(ERRIP);
-//            }
-//        }while (b);
-//
-//        short ip1[] = new short[4];
-//        short ip2[] = new short[4];
-//
-//        String s[] = s1.split("\\.");
-//        for (int i = 0; i < s.length; i++) {
-//            ip1[i] = Short.parseShort(s[i]);
-//        }
-//        String s3[] = s2.split("\\.");
-//        for (int i = 0; i < s3.length; i++) {
-//            ip2[i] = Short.parseShort(s3[i]);
-//        }
-
-//        short ip1[] = {192,168,0,1};
-//        short ip2[] = {192,168,0,5};
-
-        short ip1[] = {255,255,255,250};
-        short ip2[] = {0,0,0,5};
-
-//        short ip1[] = {192,168,0,254};
-//        short ip2[] = {192,168,1,5};
-
-        while (!Arrays.equals(ip1, ip2)){
-            System.out.println(ip1[0]+"."+ip1[1]+"."+ip1[2]+"."+ip1[3]);
-
-            for (int i = ip1.length-1; i >= 0; i--) {
-                ip1[i]++;
-                if(ip1[i]<=255){
-                    break;
-                }else {ip1[i]=0;}
+        Scanner in = new Scanner(System.in);
+        String s1,s2;
+        boolean b = true;
+        do {
+            System.out.println("Введите начальный IP: ");
+            s1 = in.nextLine();
+            IPvalid iPvalid = new IPvalid();
+            if(iPvalid.valid(s1)) b = false;
+            else {
+                System.out.println(ERRIP);
             }
+        }while (b);
 
-            //ip1=f(ip1,ip1.length);
-//            ip1[3]++;
-//            if(ip1[3]>255){
-//                ip1[3]=0;
-//                ip1[2]++;
-//                if (ip1[2]>255){
-//                    ip1[2]=0;
-//                    ip1[1]++;
-//                    if (ip1[1]>255){
-//                        ip1[1]=0;
-//                        ip1[0]++;
-//                        if(ip1[0]>255)ip1[0]=0;
-//                    }
-//                }
-//            }
+        b=true;
+        do {
+            System.out.println("Введите конечный IP: ");
+            s2 = in.nextLine();
+            IPvalid iPvalid = new IPvalid();
+            if(iPvalid.valid(s2)) b = false;
+            else {
+                System.out.println(ERRIP);
+            }
+        }while (b);
+
+        short ip1[] = new short[4];
+        short ip2[] = new short[4];
+
+        String s[] = s1.split("\\.");
+        for (int i = 0; i < s.length; i++) {
+            ip1[i] = Short.parseShort(s[i]);
         }
+        String s3[] = s2.split("\\.");
+        for (int i = 0; i < s3.length; i++) {
+            ip2[i] = Short.parseShort(s3[i]);
+        }
+
+
+        if(!Arrays.equals(ip1, ip2)){
+            ip1 = iterip(ip1);
+            if (Arrays.equals(ip1, ip2)){
+                System.out.println("Нет промежуточных Ip адресов!!!");
+            }else{
+                System.out.println("Результат: ");
+                while (!Arrays.equals(ip1, ip2)){
+                    System.out.println(ip1[0]+"."+ip1[1]+"."+ip1[2]+"."+ip1[3]);
+                    ip1 = iterip(ip1);
+                }
+            }
+        }else{
+            System.out.println("Значения Ip адресов равны!!!");
+        }
+    }
+
+    private static short [] iterip(short [] ip){
+        for (int i = ip.length-1; i >= 0; i--) {
+            ip[i]++;
+            if(ip[i]<=255){
+                break;
+            }else {ip[i]=0;}
+        }
+        return ip;
     }
 }
