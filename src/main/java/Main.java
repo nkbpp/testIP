@@ -10,13 +10,12 @@ class IPvalid{
                     "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
                     "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
     private Pattern p;
-    private Matcher m;
 
     IPvalid() {
         p = Pattern.compile(IPADDRESS);
     }
-    public boolean valid(String s){
-        m = p.matcher(s);
+    boolean valid(String s){
+        Matcher m = p.matcher(s);
         return m.matches();
     }
 }
