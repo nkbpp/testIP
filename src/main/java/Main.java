@@ -61,6 +61,9 @@ public class Main {
             ip2[i] = Short.parseShort(s3[i]);
         }
 
+if((ip1[0]>ip2[0])||((ip1[0]==ip2[0])&&(ip1[1]>ip2[1]))||((ip1[0]==ip2[0])&&(ip1[1]==ip2[1])&&(ip1[2]>ip2[2]))||((ip1[0]==ip2[0])&&(ip1[1]==ip2[1])&&(ip1[2]==ip2[2])&&(ip1[3]>ip2[3]))){
+    System.out.println("Предупреждение второй ip меньше первого, программа перескочит через 255.255.255.255!!!");
+}
 
         if(!Arrays.equals(ip1, ip2)){
             ip1 = iterip(ip1);
